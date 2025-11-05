@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Luna</title>
+    <meta name="description" content="Café Luna - Despierta tus sentidos con cada taza. Cafetería en Lima con granos orgánicos y bebidas artesanales.">
+    <meta name="keywords" content="café luna, cafetería lima, café orgánico, bebidas café, espresso, latte, cold brew, granos café, delivery café">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #fdfd96, #ffdab9);
+            padding: 1rem;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        @media (min-width: 768px) {
+            body { padding: 2rem; }
+        }
+        .container {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+        .title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        @media (min-width: 768px) {
+            .title { font-size: 2.25rem; }
+        }
+        .nav-container {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .nav-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .nav-header i {
+            color: #666;
+        }
+        .nav-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #4d4d4d;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+        @media (min-width: 768px) {
+            .nav-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+        @media (min-width: 1024px) {
+            .nav-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+        }
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            background: #f3f4f6;
+            color: #4d4d4d;
+            cursor: pointer;
+        }
+        .nav-button:hover {
+            background: #e5e7eb;
+        }
+        .nav-button.active {
+            background: #d97706;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            transform: scale(1.05);
+        }
+        .nav-button i {
+            margin-bottom: 0.5rem;
+        }
+        .nav-button span {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .content-container {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+        .node {
+            margin-bottom: 0.5rem;
+        }
+        .node-header {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        .node-header:hover {
+            opacity: 0.9;
+        }
+        .node-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .node-title-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .node-title {
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+        .node-children {
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .node.open .node-children {
+            display: block;
+        }
+        .bg-level-0 { background: #3b82f6; }
+        .bg-level-1 { background: #22c55e; }
+        .bg-level-2 { background: #a855f7; }
+        .bg-level-3 { background: #ea580c; }
+        .bg-level-4 { background: #ec4899; }
+        .info-box {
+            background: #f3f4f6;
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            color: #4d4d4d;
+            margin-left: 1.5rem;
+        }
+        .keywords {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #f3f4f6;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            color: #4d4d4d;
+        }
+        .keywords strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">☕ Café Luna</h1>
+        
+        <!-- MENÚ DE NAVEGACIÓN -->
+        <div class="nav-container">
+            <div class="nav-header">
+                <i data-lucide="menu" style="width:24px;height:24px;"></i>
+                <h2 class="nav-title">Navegación del Sitio</h2>
+            </div>
+            
+            <div class="nav-grid">
+                <button class="nav-button active" data-section="inicio">
+                    <i data-lucide="home" style="width:28px;height:28px;"></i>
+                    <span>Inicio</span>
+                </button>
+                <button class="nav-button" data-section="nosotros">
+                    <i data-lucide="users" style="width:28px;height:28px;"></i>
+                    <span>Nosotros</span>
+                </button>
+                <button class="nav-button" data-section="productos">
+                    <i data-lucide="coffee" style="width:28px;height:28px;"></i>
+                    <span>Productos</span>
+                </button>
+                <button class="nav-button" data-section="contacto">
+                    <i data-lucide="mail" style="width:28px;height:28px;"></i>
+                    <span>Contacto</span>
+                </button>
+                <button class="nav-button" data-section="blog">
+                    <i data-lucide="book-open" style="width:28px;height:28px;"></i>
+                    <span>Blog</span>
+                </button>
+                <button class="nav-button" data-section="faq">
+                    <i data-lucide="help-circle" style="width:28px;height:28px;"></i>
+                    <span>FAQ</span>
+                </button>
+                <button class="nav-button" data-section="galeria">
+                    <i data-lucide="image" style="width:28px;height:28px;"></i>
+                    <span>Galería</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTENIDO DE LA SECCIÓN -->
+        <div class="content-container" id="content">
+            <!-- Contenido inicial para 'inicio' -->
+            <div class="node" style="margin-left: 0px;">
+                <div class="node-header bg-level-0" data-toggle>
+                    <div class="node-header-content">
+                        <div class="node-title-container">
+                            <i data-lucide="home" style="width:24px;height:24px;"></i>
+                            <span class="node-title">INICIO</span>
+                        </div>
+                        <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                    </div>
+                </div>
+                <div class="node-children">
+                    <div class="node" style="margin-left: 24px;">
+                        <div class="node-header bg-level-1" data-toggle>
+                            <div class="node-header-content">
+                                <div class="node-title-container">
+                                    <span class="node-title">Hero Section (Sección Principal)</span>
+                                </div>
+                                <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                            </div>
+                        </div>
+                        <div class="node-children">
+                            <div class="info-box">
+                                • Logo y nombre: "Café Luna"<br/>
+                                • Eslogan: "Despierta tus sentidos con cada taza"<br/>
+                                • Botón CTA: "Ver Menú" / "Pedir Ahora"<br/>
+                                • Imagen destacada: Barista preparando latte art
+                            </div>
+                        </div>
+                    </div>
+                    <div class="node" style="margin-left: 24px;">
+                        <div class="node-header bg-level-1" data-toggle>
+                            <div class="node-header-content">
+                                <div class="node-title-container">
+                                    <span class="node-title">Productos Destacados</span>
+                                </div>
+                                <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                            </div>
+                        </div>
+                        <div class="node-children">
+                            <div class="info-box">
+                                • Espresso Premium - $4.50<br/>
+                                • Latte Caramelo - $5.50<br/>
+                                • Cold Brew - $5.00<br/>
+                                • Pack de Granos 250g - $12.00<br/>
+                                • Botón: "Ver Catálogo Completo"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="node" style="margin-left: 24px;">
+                        <div class="node-header bg-level-1" data-toggle>
+                            <div class="node-header-content">
+                                <div class="node-title-container">
+                                    <span class="node-title">Propuesta de Valor</span>
+                                </div>
+                                <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                            </div>
+                        </div>
+                        <div class="node-children" style="display:none;">
+                            <div class="info-box">
+                                ¿Por qué elegir Café Luna?<br/>
+                                ✓ Granos 100% orgánicos<br/>
+                                ✓ Tostado artesanal<br/>
+                                ✓ Baristas certificados<br/>
+                                ✓ Ambiente acogedor
+                            </div>
+                        </div>
+                    </div>
+                    <div class="node" style="margin-left: 24px;">
+                        <div class="node-header bg-level-1" data-toggle>
+                            <div class="node-header-content">
+                                <div class="node-title-container">
+                                    <span class="node-title">Testimonios/Reseñas</span>
+                                </div>
+                                <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                            </div>
+                        </div>
+                        <div class="node-children" style="display:none;">
+                            <div class="info-box">
+                                • Cliente 1: María González ⭐⭐⭐⭐⭐<br/>
+                                • Cliente 2: Carlos Ruiz ⭐⭐⭐⭐⭐<br/>
+                                • Cliente 3: Ana Torres ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <div class="node" style="margin-left: 24px;">
+                        <div class="node-header bg-level-1" data-toggle>
+                            <div class="node-header-content">
+                                <div class="node-title-container">
+                                    <span class="node-title">Call to Action Final</span>
+                                </div>
+                                <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                            </div>
+                        </div>
+                        <div class="node-children" style="display:none;">
+                            <div class="info-box">
+                                "Visítanos hoy y descubre tu nueva bebida favorita"<br/>
+                                [Botón: Ver Ubicación] [Botón: Pedir Delivery]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keywords">
+                        <strong>Keywords para esta sección:</strong>
+                        café luna inicio, hero section café, productos destacados café, propuesta valor cafetería, testimonios café lima
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Contenidos predefinidos para cada sección
+        const contents = {
+            inicio: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="home" style="width:24px;height:24px;"></i>
+                                <span class="node-title">INICIO</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Hero Section (Sección Principal)</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children">
+                                <div class="info-box">
+                                    • Logo y nombre: "Café Luna"<br/>
+                                    • Eslogan: "Despierta tus sentidos con cada taza"<br/>
+                                    • Botón CTA: "Ver Menú" / "Pedir Ahora"<br/>
+                                    • Imagen destacada: Barista preparando latte art
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Productos Destacados</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children">
+                                <div class="info-box">
+                                    • Espresso Premium - $4.50<br/>
+                                    • Latte Caramelo - $5.50<br/>
+                                    • Cold Brew - $5.00<br/>
+                                    • Pack de Granos 250g - $12.00<br/>
+                                    • Botón: "Ver Catálogo Completo"
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Propuesta de Valor</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    ¿Por qué elegir Café Luna?<br/>
+                                    ✓ Granos 100% orgánicos<br/>
+                                    ✓ Tostado artesanal<br/>
+                                    ✓ Baristas certificados<br/>
+                                    ✓ Ambiente acogedor
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Testimonios/Reseñas</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Cliente 1: María González ⭐⭐⭐⭐⭐<br/>
+                                    • Cliente 2: Carlos Ruiz ⭐⭐⭐⭐⭐<br/>
+                                    • Cliente 3: Ana Torres ⭐⭐⭐⭐⭐
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Call to Action Final</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    "Visítanos hoy y descubre tu nueva bebida favorita"<br/>
+                                    [Botón: Ver Ubicación] [Botón: Pedir Delivery]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            café luna inicio, hero section café, productos destacados café, propuesta valor cafetería, testimonios café lima
+                        </div>
+                    </div>
+                </div>
+            `,
+            nosotros: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="users" style="width:24px;height:24px;"></i>
+                                <span class="node-title">NOSOTROS</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Historia del Emprendimiento</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    Café Luna nació en 2021 cuando dos amigos apasionados decidieron crear un espacio donde cada taza contara una historia...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Misión</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    Ofrecer experiencias de café excepcionales mediante granos de especialidad cuidadosamente seleccionados...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Visión</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    Convertirnos en la cafetería de referencia en Lima para los amantes del buen café...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Valores</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Calidad<br/>
+                                    • Sostenibilidad<br/>
+                                    • Comunidad<br/>
+                                    • Pasión<br/>
+                                    • Innovación
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Nuestro Equipo</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Andrés Morales - Co-fundador & Maestro Tostador<br/>
+                                    • Laura Vega - Co-fundadora & Head Barista<br/>
+                                    • Diego Paredes - Barista Senior
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            nosotros café luna, historia emprendimiento café, misión visión cafetería, valores café orgánico, equipo baristas lima
+                        </div>
+                    </div>
+                </div>
+            `,
+            productos: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="coffee" style="width:24px;height:24px;"></i>
+                                <span class="node-title">PRODUCTOS/MENÚ</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Bebidas Calientes</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children">
+                                <div class="node" style="margin-left: 48px;">
+                                    <div class="node-header bg-level-2" data-toggle>
+                                        <div class="node-header-content">
+                                            <div class="node-title-container">
+                                                <span class="node-title">Espresso Base</span>
+                                            </div>
+                                            <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="node-children" style="display:none;">
+                                        <div class="info-box">
+                                            • Espresso Simple - $3.50<br/>
+                                            • Americano - $4.00<br/>
+                                            • Cappuccino - $5.00<br/>
+                                            • Latte - $5.00<br/>
+                                            • Flat White - $5.50
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="node" style="margin-left: 48px;">
+                                    <div class="node-header bg-level-2" data-toggle>
+                                        <div class="node-header-content">
+                                            <div class="node-title-container">
+                                                <span class="node-title">Especiales</span>
+                                            </div>
+                                            <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="node-children" style="display:none;">
+                                        <div class="info-box">
+                                            • Mocha - $6.00<br/>
+                                            • Caramel Macchiato - $6.50<br/>
+                                            • Café de Olla - $5.50
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Bebidas Frías</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Cold Brew - $5.00<br/>
+                                    • Iced Latte - $5.50<br/>
+                                    • Frappé - $6.50<br/>
+                                    • Affogato - $6.00
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Granos de Café Para Llevar</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Blend Signature Luna - $12.00/250g<br/>
+                                    • Single Origin Cusco - $15.00/250g<br/>
+                                    • Blend Oscuro Nocturno - $12.00/250g
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Acompañamientos</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Croissants artesanales - $3.50<br/>
+                                    • Muffins del día - $3.00<br/>
+                                    • Torta de chocolate - $4.50<br/>
+                                    • Cheesecake - $5.00<br/>
+                                    • Sándwich de pollo - $7.00
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Ficha de Producto Individual</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    Cada producto contiene:<br/>
+                                    • Nombre del producto<br/>
+                                    • Imágenes (múltiples vistas)<br/>
+                                    • Descripción detallada<br/>
+                                    • Precio<br/>
+                                    • Ingredientes/especificaciones<br/>
+                                    • Botón "Agregar al carrito"<br/>
+                                    • Productos relacionados
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            productos café luna, menú bebidas calientes, bebidas frías café, granos café llevar, acompañamientos cafetería
+                        </div>
+                    </div>
+                </div>
+            `,
+            contacto: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="mail" style="width:24px;height:24px;"></i>
+                                <span class="node-title">CONTACTO</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Formulario de Contacto</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Campo: Nombre<br/>
+                                    • Campo: Email<br/>
+                                    • Campo: Teléfono<br/>
+                                    • Campo: Mensaje<br/>
+                                    • Botón: Enviar
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Información Directa</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    📱 WhatsApp: +51 987 654 321<br/>
+                                    📧 Email: hola@cafeluna.pe<br/>
+                                    📍 Dirección: Av. Larco 1234, Miraflores<br/>
+                                    🕐 Horario: Lun-Vie 7AM-8PM
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Redes Sociales</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Instagram: @cafeluna.pe<br/>
+                                    • Facebook: Café Luna Perú<br/>
+                                    • TikTok: @cafeluna
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Mapa de Ubicación</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    Google Maps embebido con la ubicación del local
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            contacto café luna, formulario contacto cafetería, información contacto lima, redes sociales café, mapa ubicación miraflores
+                        </div>
+                    </div>
+                </div>
+            `,
+            blog: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="book-open" style="width:24px;height:24px;"></i>
+                                <span class="node-title">BLOG</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Lista de Artículos</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • "Cómo preparar el café perfecto en casa"<br/>
+                                    • "La diferencia entre arábica y robusta"<br/>
+                                    • "Conoce nuestros proveedores: Café de Cusco"<br/>
+                                    • "5 beneficios del café que no conocías"<br/>
+                                    • "Historia del café en Perú"
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Estructura de Artículo Individual</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Título del artículo<br/>
+                                    • Imagen destacada<br/>
+                                    • Fecha de publicación<br/>
+                                    • Autor<br/>
+                                    • Contenido completo<br/>
+                                    • Categorías/tags<br/>
+                                    • Botón compartir en redes<br/>
+                                    • Artículos relacionados
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Categorías del Blog</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Recetas<br/>
+                                    • Cultura del café<br/>
+                                    • Noticias<br/>
+                                    • Tips y consejos<br/>
+                                    • Proveedores
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            blog café luna, artículos café, recetas café casa, beneficios café, historia café perú
+                        </div>
+                    </div>
+                </div>
+            `,
+            faq: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="help-circle" style="width:24px;height:24px;"></i>
+                                <span class="node-title">PREGUNTAS FRECUENTES (FAQ)</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Sobre Pedidos y Delivery</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    <strong>¿Hacen delivery?</strong><br/>
+                                    Sí, hacemos delivery a través de Rappi, PedidosYa y servicio propio para pedidos mayores a S/30.<br/><br/>
+                                    <strong>¿Cuál es el tiempo de entrega?</strong><br/>
+                                    Entre 30-45 minutos dependiendo de la zona.<br/><br/>
+                                    <strong>¿Hay mínimo de compra?</strong><br/>
+                                    Para delivery propio el mínimo es S/30.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Sobre Productos</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    <strong>¿Tienen opciones veganas?</strong><br/>
+                                    Sí, ofrecemos leche de almendras, soya y avena sin costo adicional.<br/><br/>
+                                    <strong>¿Venden equipo para preparar café?</strong><br/>
+                                    Sí, tenemos prensas francesas, V60, Chemex y otros accesorios.<br/><br/>
+                                    <strong>¿Ofrecen café descafeinado?</strong><br/>
+                                    Sí, todos nuestros drinks pueden prepararse con café descafeinado.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Políticas</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    <strong>¿Cuál es su política de devoluciones?</strong><br/>
+                                    Aceptamos devoluciones de granos sin abrir dentro de 7 días.<br/><br/>
+                                    <strong>¿Qué métodos de pago aceptan?</strong><br/>
+                                    Efectivo, tarjetas de crédito/débito, Yape, Plin y transferencias.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            faq café luna, preguntas frecuentes delivery, opciones veganas café, políticas devoluciones cafetería, métodos pago lima
+                        </div>
+                    </div>
+                </div>
+            `,
+            galeria: `
+                <div class="node" style="margin-left: 0px;">
+                    <div class="node-header bg-level-0" data-toggle>
+                        <div class="node-header-content">
+                            <div class="node-title-container">
+                                <i data-lucide="image" style="width:24px;height:24px;"></i>
+                                <span class="node-title">GALERÍA</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:24px;height:24px;" class="toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="node-children">
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Fotos del Local</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Vista exterior<br/>
+                                    • Interior del local<br/>
+                                    • Área de mesas<br/>
+                                    • Barra de café<br/>
+                                    • Zona de trabajo<br/>
+                                    • Decoración y ambiente
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Proceso de Elaboración</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Tostado de granos<br/>
+                                    • Preparación de espresso<br/>
+                                    • Latte art<br/>
+                                    • Preparación de cold brew<br/>
+                                    • Behind the scenes
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Productos</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Bebidas calientes<br/>
+                                    • Bebidas frías<br/>
+                                    • Alimentos<br/>
+                                    • Granos de café empacados<br/>
+                                    • Accesorios
+                                </div>
+                            </div>
+                        </div>
+                        <div class="node" style="margin-left: 24px;">
+                            <div class="node-header bg-level-1" data-toggle>
+                                <div class="node-header-content">
+                                    <div class="node-title-container">
+                                        <span class="node-title">Eventos y Clientes</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" style="width:24px;height:24px;" class="toggle-icon"></i>
+                                </div>
+                            </div>
+                            <div class="node-children" style="display:none;">
+                                <div class="info-box">
+                                    • Talleres de barismo<br/>
+                                    • Catas de café<br/>
+                                    • Clientes disfrutando<br/>
+                                    • Eventos especiales<br/>
+                                    • Colaboraciones
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keywords">
+                            <strong>Keywords para esta sección:</strong>
+                            galería café luna, fotos local cafetería, proceso elaboración café, fotos productos bebidas, eventos café lima
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // Manejar cambio de sección
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const section = button.dataset.section;
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = contents[section];
+                lucide.createIcons();
+                addToggleListeners(contentDiv);
+            });
+        });
+
+        // Función para agregar listeners a los toggles
+        function addToggleListeners(container) {
+            container.querySelectorAll('[data-toggle]').forEach(header => {
+                header.addEventListener('click', () => {
+                    const node = header.closest('.node');
+                    const children = node.querySelector('.node-children');
+                    const icon = header.querySelector('.toggle-icon');
+                    if (children) {
+                        node.classList.toggle('open');
+                        if (node.classList.contains('open')) {
+                            icon.setAttribute('data-lucide', 'chevron-down');
+                        } else {
+                            icon.setAttribute('data-lucide', 'chevron-right');
+                        }
+                        lucide.createIcons();
+                    }
+                });
+            });
+        }
+
+        // Inicializar toggles en carga inicial
+        addToggleListeners(document);
+    </script>
+</body>
+</html>
